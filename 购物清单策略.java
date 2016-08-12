@@ -1,49 +1,49 @@
-/**
- * Created by davidshuvli on 2016/8/5.
- */
-import java.util.Scanner;
-
-public class Main{
-
-    public static void main(String[] args) {
-        Scanner sc=new Scanner(System.in);
-        int sum_money = 0;
-        int num = 0;
-        sum_money=sc.nextInt();
-        num=sc.nextInt();
-        int price[]=new int[num+1];
-        int val[]=new int[num+1];
-        int[] q = new int[num+1];
-        for (int i = 1; i <= num; i++) {
-            price[i]=sc.nextInt();
-            val[i]=sc.nextInt()*price[i];
-            q[i]=sc.nextInt();
-        }
-        int[][] dp=new int[num+1][sum_money+1];
-/*
-* ³õÊ¼ÖµjavaÄ¬ÈÏ¸³ÖµÎª0,ÆäÖÐdp[0][0...sum_money]Îª0,´Ódp[1][0...sum_money]
-  ¼ÆËãµÚ1ÐÐ,´ú±íµÚÒ»¼þÎïÆ·
-dp[i][sum_money] £º Ç°i¸öÎïÌå·ÅÈëÈÝÁ¿Îªsum_moneyµÄ±³°üµÄ×î´ó¼ÛÖµ£»
-dp[i-1][sum_money] £º Ç°i-1¸öÎïÌå·ÅÈëÈÝÁ¿Îªsum_moneyµÄ±³°üµÄ×î´ó¼ÛÖµ£»
-dp[i-1][sum_money-price[i]] £º Ç°i-1¸öÎïÌå·ÅÈëÈÝÁ¿Îªsum_money-price[i]µÄ±³°üµÄ×î´ó¼ÛÖµ£»
-dp[i][sum_money]=Math.max{dp[i-1][sum_money-price[i]]+val[i] , dp[i-1][sum_money]}
-*/
-        for (int i = 1; i <=num; i++) {
-            for (int j = 1; j <= sum_money; j++) {
-                if(q[i]==0)
-                {
-                    if(price[i]<=j)
-                        dp[i][j]=Math.max(dp[i-1][j], dp[i-1][j-price[i]]+val[i]);
-                }
-                if(q[i]>0)
-                {
-                    if(price[i]+price[q[i]]<=j)
-                        dp[i][j]=Math.max(dp[i-1][j], dp[i-1][j-price[i]-price[q[i]]]+val[i]+val[q[i]]);
-                }
-            }
-
-        }
-        System.out.println(dp[num][sum_money]);
-    }
-
-}
+///**
+// * Created by davidshuvli on 2016/8/5.
+// */
+//import java.util.Scanner;
+//
+//public class Main{
+//
+//    public static void main(String[] args) {
+//        Scanner sc=new Scanner(System.in);
+//        int sum_money = 0;
+//        int num = 0;
+//        sum_money=sc.nextInt();
+//        num=sc.nextInt();
+//        int price[]=new int[num+1];
+//        int val[]=new int[num+1];
+//        int[] q = new int[num+1];
+//        for (int i = 1; i <= num; i++) {
+//            price[i]=sc.nextInt();
+//            val[i]=sc.nextInt()*price[i];
+//            q[i]=sc.nextInt();
+//        }
+//        int[][] dp=new int[num+1][sum_money+1];
+///*
+//* ï¿½ï¿½Ê¼ÖµjavaÄ¬ï¿½Ï¸ï¿½ÖµÎª0,ï¿½ï¿½ï¿½ï¿½dp[0][0...sum_money]Îª0,ï¿½ï¿½dp[1][0...sum_money]
+//  ï¿½ï¿½ï¿½ï¿½ï¿½1ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Æ·
+//dp[i][sum_money] ï¿½ï¿½ Ç°iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªsum_moneyï¿½Ä±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½
+//dp[i-1][sum_money] ï¿½ï¿½ Ç°i-1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªsum_moneyï¿½Ä±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½
+//dp[i-1][sum_money-price[i]] ï¿½ï¿½ Ç°i-1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªsum_money-price[i]ï¿½Ä±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½
+//dp[i][sum_money]=Math.max{dp[i-1][sum_money-price[i]]+val[i] , dp[i-1][sum_money]}
+//*/
+//        for (int i = 1; i <=num; i++) {
+//            for (int j = 1; j <= sum_money; j++) {
+//                if(q[i]==0)
+//                {
+//                    if(price[i]<=j)
+//                        dp[i][j]=Math.max(dp[i-1][j], dp[i-1][j-price[i]]+val[i]);
+//                }
+//                if(q[i]>0)
+//                {
+//                    if(price[i]+price[q[i]]<=j)
+//                        dp[i][j]=Math.max(dp[i-1][j], dp[i-1][j-price[i]-price[q[i]]]+val[i]+val[q[i]]);
+//                }
+//            }
+//
+//        }
+//        System.out.println(dp[num][sum_money]);
+//    }
+//
+//}
